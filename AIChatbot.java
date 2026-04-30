@@ -2,17 +2,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class AIChatbot {
-    
+public class Main {
+
     private Map<String, String> faqDatabase;
     private Scanner scanner;
-    
-    public AIChatbot() {
+
+    public Main() {
         scanner = new Scanner(System.in);
         faqDatabase = new HashMap<>();
         initializeFAQs();
     }
-    
+
     private void initializeFAQs() {
         faqDatabase.put("hello", "Hello! Welcome to the CodeAlpha AI Chatbot. How can I help you today?");
         faqDatabase.put("hi", "Hi there! I'm your AI assistant. What would you like to know?");
@@ -24,49 +24,35 @@ public class AIChatbot {
         faqDatabase.put("help", "I can help you with FAQs about Java, OOP, Internships, CodeAlpha, and more. Just type your question!");
         faqDatabase.put("bye", "Goodbye! Have a great day ahead! Come back anytime.");
     }
-    
+
     public String getResponse(String userInput) {
         String input = userInput.toLowerCase().trim();
-        
+
         if (faqDatabase.containsKey(input)) {
             return faqDatabase.get(input);
         }
-        
-        for (String key : faqDatabase.keySet()) {
-            if (input.contains(key)) {
-                return faqDatabase.get(key);
-            }
-        }
-        
-        return "I'm not sure about that. Try asking about Java, OOP, Internships, CodeAlpha, or type 'help' for assistance.";
+
+        return "Sorry, I don't understand that. Type 'help' to see what I can answer.";
     }
-    
+
     public void startChat() {
-        System.out.println("=================================");
-        System.out.println("   Welcome to AI Chatbot!   ");
-        System.out.println("=================================");
-        System.out.println("Type your message (or 'bye' to exit):");
-        System.out.println();
-        
+        System.out.println("AI Chatbot is now running. Type 'bye' to exit.");
+
         while (true) {
             System.out.print("You: ");
             String userInput = scanner.nextLine();
-            
-            if (userInput.equalsIgnoreCase("bye") || userInput.equalsIgnoreCase("exit")) {
-                System.out.println("Bot: " + getResponse("bye"));
-                break;
-            }
-            
+
             String response = getResponse(userInput);
             System.out.println("Bot: " + response);
-            System.out.println();
+
+            if (userInput.equalsIgnoreCase("bye")) {
+                break;
+            }
         }
-        
-        scanner.close();
     }
-    
+
     public static void main(String[] args) {
-        AIChatbot chatbot = new AIChatbot();
+        Main chatbot = new Main();
         chatbot.startChat();
     }
 }
